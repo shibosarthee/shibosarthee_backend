@@ -11,7 +11,7 @@ export const sendEmail = async (to, subject, htmlContent) => {
 
     const response = await resend.emails.send({
       from: 'shibosarthee@resend.dev', // You can replace with your verified domain email
-      'shibosarthee@gmail.com',
+      to: 'shibosarthee@gmail.com',
       subject,
       html: htmlContent,
     });
