@@ -109,11 +109,10 @@ const profileSchema = new mongoose.Schema(
     // --- Family Details ---
     fatherName: { type: String },
     motherName: { type: String },
-    numberOfBrothers: { type: Number },
-    numberOfSisters: { type: Number },
+    brothers: { type: Number },
+    sisters: { type: Number },
     familyStatus: { type: String }, // e.g., Middle Class, Upper Middle Class, etc.
-    familyOccupation: { type: String },
-
+    
     // --- Other Details ---
     bio: { type: String, maxLength: 500 },
     aboutMe: { type: String },
@@ -137,6 +136,7 @@ const profileSchema = new mongoose.Schema(
       preferredCaste: { type: String },
       preferredLocation: { type: String },
       expectations: { type: String }, // user’s expectations
+      
     },
 
     isActive: { type: Boolean, default: true },
