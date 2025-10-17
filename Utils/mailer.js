@@ -12,12 +12,13 @@ const sendEmail = async (to, subject, htmlContent) => {
       },
     });
 
-   const info = await transporter.sendMail({
-      from: '"ShiboSarthee" <no-reply@healcure.ca>',
+    let mailoption = {
+      from: process.env.EMAIL_USER,
       to,
       subject,
       html: htmlContent, // ✅ explicitly HTML content
-    });
+    }
+   const info = await transporter.sendMail(mailoption);
     console.log("📨 Email sent:", info.messageId);
     return info;
   } catch (error) {
