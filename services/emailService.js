@@ -10,7 +10,7 @@ export const sendEmail = async (to, subject, htmlContent) => {
     console.log('📩 Sending email via Resend...');
 
     const response = await resend.emails.send({
-      from: 'onboarding@resend.dev', // You can replace with your verified domain email
+      from: 'shibosarthee@gmail.com', // You can replace with your verified domain email
       to,
       subject,
       html: htmlContent,
