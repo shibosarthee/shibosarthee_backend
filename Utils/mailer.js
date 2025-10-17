@@ -4,13 +4,30 @@ dotenv.config();
 
 const sendEmail = async (to, subject, htmlContent) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    console.log('Attempting to send email...');
+        console.log(`Recipient: ${email}, Subject: ${subject}`);
+
+        // Create transporter with debug and logger options
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            },
+            debug: true, // Enable debug output
+            logger: true // Enable logging
+        });
+
+        console.log('Transporter created, verifying connection...');
+
+        // Verify transporter connection
+        await transporter.verify((error, success) => {
+            if (error) {
+                console.error('Transporter verification failed:', error);
+            } else {
+                console.log('Server is ready to take our messages');
+            }
+        });
 
     let mailoption = {
       from: process.env.EMAIL_USER,
