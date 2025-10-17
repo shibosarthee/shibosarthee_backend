@@ -63,6 +63,7 @@ const profileSchema = new mongoose.Schema(
     fullName: { type: String, required: true },
     gender: { type: String, enum: ["male", "female", "other"], required: true },
     dateOfBirth: { type: Date, required: true },
+    age:{type:Number},
     maritalStatus: {
       type: String,
       enum: ["single", "divorced", "widowed"],
