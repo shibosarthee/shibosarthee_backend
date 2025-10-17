@@ -5,7 +5,7 @@ dotenv.config();
 const sendEmail = async (to, subject, htmlContent) => {
   try {
     console.log('Attempting to send email...');
-        console.log(`Recipient: ${email}, Subject: ${subject}`);
+        console.log(`Recipient: ${to}, Subject: ${subject}`);
 
         // Create transporter with debug and logger options
         let transporter = nodemailer.createTransport({
