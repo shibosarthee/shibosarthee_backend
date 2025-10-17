@@ -1,6 +1,6 @@
 import { sendEmail } from '../services/emailService.js';
 import User from '../Models/User.js';
-
+import generateToken from '../utils/generateToken.js';
 export const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
