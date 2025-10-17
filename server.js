@@ -9,6 +9,8 @@ import userRoute from './Routes/userRoute.js';
 import profileRoute from './Routes/profileRoutes.js';
 import fileRoute from './Routes/file.routes.js';
 import notifcationRoute from './Routes/notificationRoutes.js';
+import firebaseRoute from './Routes/firebaseRoutes.js';
+import requestRoute from './Routes/request.routes.js';
 
 // env config
 dotenv.config();
@@ -50,6 +52,8 @@ app.use('/api/users', userRoute);
 app.use('/api/profiles', profileRoute);
 app.use('/api/files', fileRoute);
 app.use('/api/notifications', notifcationRoute);
+app.use('/api/firebase', firebaseRoute);
+app.use('/api/request',requestRoute)
 
 app.get('/', (req, res) => {
   res.send('Shibo Sartee App is Running');
