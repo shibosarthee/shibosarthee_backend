@@ -13,9 +13,9 @@ import {
  */
 export const createProfile = async (req, res) => {
   try {
-    const { error } = createProfileSchema.validate(req.body);
-    if (error)
-      return res.status(400).json({ message: error.details[0].message });
+    // const { error } = createProfileSchema.validate(req.body);
+    // if (error)
+    //   return res.status(400).json({ message: error.details[0].message });
 
     const profile = await Profile.create({
       ...req.body,
