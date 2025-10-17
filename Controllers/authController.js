@@ -48,5 +48,5 @@ export const verifyOtp = async (req, res) => {
   user.otpExpires = undefined;
   await user.save();
 
-  res.json({ message: 'OTP verified successfully', user });
+  res.json({ message: "Login successful", token: generateToken(user._id), user, });
 };
