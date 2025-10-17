@@ -114,7 +114,7 @@ const profileSchema = new mongoose.Schema(
     familyStatus: { type: String }, // e.g., Middle Class, Upper Middle Class, etc.
     
     // --- Other Details ---
-    bio: { type: String, maxLength: 500 },
+    // bio: { type: String, maxLength: 500 },
     aboutMe: { type: String },
     
     // --- Profile Images ---
