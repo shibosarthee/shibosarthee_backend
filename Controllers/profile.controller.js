@@ -62,9 +62,9 @@ export const getProfileById = async (req, res) => {
  */
 export const updateProfile = async (req, res) => {
   try {
-    const { error } = updateProfileSchema.validate(req.body);
-    if (error)
-      return res.status(400).json({ message: error.details[0].message });
+    // const { error } = updateProfileSchema.validate(req.body);
+    // if (error)
+    //   return res.status(400).json({ message: error.details[0].message });
 
     const profile = await Profile.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
