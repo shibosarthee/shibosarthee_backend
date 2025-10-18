@@ -6,7 +6,7 @@ export const createProfileSchema = Joi.object({
   dateOfBirth: Joi.date().required(),
   religion: Joi.string(),
   // caste: Joi.string(),
-  height: Joi.number().min(50).max(250),
+  height: Joi.number().min(0).max(250),
   education: Joi.string(),
   occupation: Joi.string(),
   location: Joi.string(),
