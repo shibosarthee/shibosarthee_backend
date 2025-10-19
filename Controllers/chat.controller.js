@@ -139,8 +139,6 @@ export const getChatHistory = async (req, res) => {
 
         const messages = await Message.find({ room })
             .sort({ createdAt: 1 })
-            .populate('sender')
-            .populate('receiver');
 
         res.status(200).json({
             success: true,
