@@ -1,12 +1,11 @@
-const Message = require('../Models/Message');
-const User = require('../Models/User');
-
+import Message from "../Models/Message.js";
+import User from "../Models/User.js";
 // Store online users and their socket IDs
 const onlineUsers = new Map();
 // Store typing status
 const typingUsers = new Map();
 
-const initializeSocket = (io) => {
+export const initializeSocket = (io) => {
     io.on('connection', (socket) => {
         // Handle user connection
         socket.on('user_connected', async (userId) => {
@@ -133,7 +132,7 @@ const initializeSocket = (io) => {
 };
 
 // Controller methods for REST API endpoints
-const getChatHistory = async (req, res) => {
+export const getChatHistory = async (req, res) => {
     try {
         const { userId, otherUserId } = req.params;
         const room = [userId, otherUserId].sort().join('-');
@@ -156,7 +155,7 @@ const getChatHistory = async (req, res) => {
     }
 };
 
-const getRecentChats = async (req, res) => {
+export const getRecentChats = async (req, res) => {
     try {
         const { userId } = req.params;
 
@@ -200,8 +199,3 @@ const getRecentChats = async (req, res) => {
     }
 };
 
-module.exports = {
-    initializeSocket,
-    getChatHistory,
-    getRecentChats
-};
