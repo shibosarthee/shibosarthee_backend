@@ -26,15 +26,9 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: [
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'exp://127.0.0.1:19000',
-      'http://localhost:19006',
-    ],
-    methods: ['GET', 'POST'],
-    credentials: true
-  }
+    origin: "*",
+    credentials: true,
+  },
 });
 
 // Initialize socket.io
