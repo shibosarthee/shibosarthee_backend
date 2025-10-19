@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 import { connectDB } from './config/db.js';
 
 // Routes import
@@ -11,6 +13,8 @@ import fileRoute from './Routes/file.routes.js';
 import notifcationRoute from './Routes/notificationRoutes.js';
 import firebaseRoute from './Routes/firebaseRoutes.js';
 import requestRoute from './Routes/request.routes.js';
+import chatRoute from './Routes/chat.routes.js';
+import { initializeSocket } from './Controllers/chat.controller.js';
 
 // env config
 dotenv.config();
@@ -19,6 +23,23 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: [
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'exp://127.0.0.1:19000',
+      'http://localhost:19006',
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
+// Initialize socket.io
+initializeSocket(io);
+
 const PORT = process.env.PORT || 5000;
 
 // ✅ CORS configuration
@@ -53,12 +74,13 @@ app.use('/api/profiles', profileRoute);
 app.use('/api/files', fileRoute);
 app.use('/api/notifications', notifcationRoute);
 app.use('/api/firebase', firebaseRoute);
-app.use('/api/request',requestRoute)
+app.use('/api/request', requestRoute);
+app.use('/api/chat', chatRoute);
 
 app.get('/', (req, res) => {
   res.send('Shibo Sartee App is Running');
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
