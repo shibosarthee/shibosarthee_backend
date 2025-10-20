@@ -57,6 +57,46 @@ export const getProfileById = async (req, res) => {
   }
 };
 
+export const getSuggestedProfiles = async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    // Extract partner preferences
+    const { minAge, maxAge, preferredCaste, preferredLocation } =
+      profile.partnerPreferences || {};
+
+    // Calculate date ranges for min/max age
+    const today = new Date();
+    const minDOB = new Date(
+      today.getFullYear() - maxAge,
+      today.getMonth(),
+      today.getDate()
+    );
+    const maxDOB = new Date(
+      today.getFullYear() - minAge,
+      today.getMonth(),
+      today.getDate()
+    );
+
+    // Query for suggested profiles
+    const suggestedProfiles = await Profile.find({
+      _id: { $ne: profile._id }, // exclude self
+      gender: { $ne: profile.gender }, // opposite gender
+      dob: { $gte: minDOB, $lte: maxDOB }, // within age range
+      ...(preferredCaste ? { caste: preferredCaste } : {}), // caste match if given
+      ...(preferredLocation ? { location: preferredLocation } : {}), // location match if given
+    }).limit(20); // optional limit
+
+    res.status(200).json({ profile, suggestedProfiles });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const detailsgetProfileById = async (req, res) => {
   try {
     const profile = await Profile.findOne({
