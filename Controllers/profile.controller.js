@@ -98,7 +98,7 @@ export const getStats = async (req, res) => {
     ]);
 
     // Format result into { male: x, female: y }
-    const result = {
+    let result = {
       male: 0,
       female: 0,
     };
