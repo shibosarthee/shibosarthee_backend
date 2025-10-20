@@ -76,9 +76,45 @@ export const getSuggestedProfiles = async (req, res) => {
       ...(minAge && maxAge ? { age: { $gte: minAge, $lte: maxAge } } : {}), // age range
       // ...(preferredCaste ? { caste: preferredCaste } : {}), // caste match if given
       // ...(preferredLocation ? { location: preferredLocation } : {}), // location match if given
-    })
+    });
 
     res.status(200).json({ suggestedProfiles });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get total male/female profile counts
+export const getStats = async (req, res) => {
+  try {
+    // Using aggregation to group by gender
+    const stats = await Profile.aggregate([
+      {
+        $group: {
+          _id: "$gender", // assuming field is "gender"
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Format result into { male: x, female: y }
+    const result = {
+      male: 0,
+      female: 0,
+    };
+
+    stats.forEach((s) => {
+      if (s._id?.toLowerCase() === "male") {
+        result.male = s.count;
+      } else if (s._id?.toLowerCase() === "female") {
+        result.female = s.count;
+      }
+    });
+
+    // Also add total if you want
+    result.total = result.male + result.female;
+
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

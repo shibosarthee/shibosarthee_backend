@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProfile,getMyProfiles,getAllActiveProfiles,getProfileById,detailsgetProfileById,updateProfile,deleteProfile, deleteGalleryPhoto, uploadProfileImage, uploadGalleryPhotos, getSuggestedProfiles } from '../Controllers/profile.controller.js';
+import { createProfile,getMyProfiles,getAllActiveProfiles,getProfileById,detailsgetProfileById,updateProfile,deleteProfile, deleteGalleryPhoto, uploadProfileImage, uploadGalleryPhotos, getSuggestedProfiles, getStats } from '../Controllers/profile.controller.js';
 import { protect } from '../middleware/authmiddleware.js';
 import { uploadMultiple, uploadSingle } from '../middleware/upload.middleware.js';
 
@@ -9,7 +9,8 @@ const router = express.Router();
 router.post("/", protect, createProfile);               // create profile
 router.get("/my", protect, getMyProfiles);              // get my profiles
 router.get("/:id", protect, getProfileById);            // get one profile
-router.get("/suggestion/:id", getSuggestedProfiles);            // get one profile
+router.get("/getstats", protect, getStats);            // get one profile
+router.get("/suggestion/:id", protect, getSuggestedProfiles);            // get one profile
 router.get("/details/:id", protect, detailsgetProfileById);            // get one profile
 router.put("/:id", protect, updateProfile);             // update
 router.delete("/:id", protect, deleteProfile);          // delete
