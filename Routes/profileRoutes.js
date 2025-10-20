@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/", protect, createProfile);               // create profile
 router.get("/my", protect, getMyProfiles);              // get my profiles
 router.get("/:id", protect, getProfileById);            // get one profile
-router.get("/suggestion/:id", protect, getSuggestedProfiles);            // get one profile
+router.get("/suggestion/:id", getSuggestedProfiles);            // get one profile
 router.get("/details/:id", protect, detailsgetProfileById);            // get one profile
 router.put("/:id", protect, updateProfile);             // update
 router.delete("/:id", protect, deleteProfile);          // delete
