@@ -4,6 +4,7 @@ import User from "../Models/User.js";
 // Add rating
 export const addRating = async (req, res) => {
   try {
+    //const userId = req.user._id; // get from middleware //uncomment if you take it from middleware
     const { userId, stars, feedback } = req.body;
 
     if (!userId || !stars)
