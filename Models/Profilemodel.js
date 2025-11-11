@@ -77,6 +77,9 @@ const profileSchema = new mongoose.Schema(
     complexion: { type: String }, // e.g., Fair, Wheatish, Dark
     bodyType: { type: String }, // e.g., Slim, Average, Athletic, Heavy
 
+    birthPlace: {type:String},
+    birthTime:{type:String},
+
     // --- Educational & Career Details ---
     education: { type: String },
     jobTitle: { type: String },
