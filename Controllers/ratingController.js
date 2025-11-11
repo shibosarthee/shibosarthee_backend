@@ -4,8 +4,8 @@ import User from "../Models/User.js";
 // Add rating
 export const addRating = async (req, res) => {
   try {
-    //const userId = req.user._id; // get from middleware //uncomment if you take it from middleware
-    const { userId, stars, feedback } = req.body;
+    const userId = req.user._id; // get from middleware //uncomment if you take it from middleware
+    const { stars, feedback } = req.body;
 
     if (!userId || !stars)
       return res.status(400).json({ message: "userId and stars are required" });
@@ -16,6 +16,7 @@ export const addRating = async (req, res) => {
 
     // Optionally allow only one rating per user (uncomment if you want)
     // const existing = await Rating.findOne({ user: userId });
+
     // if (existing)
     //   return res.status(400).json({ message: "User already submitted feedback" });
 
