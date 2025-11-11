@@ -19,10 +19,10 @@ export const sendOtp = async (req, res) => {
     // save OTP in user model
     let user = await User.findOne({ email });
     if (!user) {
-      user = await User.create({ email, otp, otpExpires: Date.now() + 5 * 60 * 1000 });
+      user = await User.create({ email, otp, otpExpiresAt: Date.now() + 5 * 60 * 1000 });
     } else {
       user.otp = otp;
-      user.otpExpires = Date.now() + 5 * 60 * 1000;
+      user.otpExpiresAt = Date.now() + 5 * 60 * 1000;
       await user.save();
     }
 
@@ -39,13 +39,13 @@ export const verifyOtp = async (req, res) => {
   const user = await User.findOne({ email });
   if (!user) return res.status(400).json({ message: 'User not found' });
 
-  if (user.otp !== otp || Date.now() > user.otpExpires) {
+  if (user.otp !== otp || Date.now() > user.otpExpiresAt) {
     return res.status(400).json({ message: 'Invalid or expired OTP' });
   }
 
   user.isVerified = true;
   user.otp = undefined;
-  user.otpExpires = undefined;
+  user.otpExpiresAt = undefined;
   await user.save();
 
   res.json({ message: "Login successful", token: generateToken(user._id), user, });

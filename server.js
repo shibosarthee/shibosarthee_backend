@@ -16,6 +16,7 @@ import requestRoute from './Routes/request.routes.js';
 import chatRoute from './Routes/chat.routes.js';
 import favoriteRoute from './Routes/favorite.routes.js';
 import { initializeSocket } from './Controllers/chat.controller.js';
+import ratingRoutes from './Routes/ratingRoutes.js';
 
 // env config
 dotenv.config();
@@ -72,6 +73,7 @@ app.use('/api/firebase', firebaseRoute);
 app.use('/api/request', requestRoute);
 app.use('/api/chat', chatRoute);
 app.use('/api/favorites', favoriteRoute);
+app.use('/api/ratings',ratingRoutes);
 
 app.get('/', (req, res) => {
   res.send('Shibo Sartee App is Running');
