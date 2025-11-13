@@ -93,7 +93,7 @@ const userSchema = new mongoose.Schema(
     otp: { type: String },
     otpExpiresAt: { type: Date },
 // fcm token  to  send notification to user
-fcmToken: String,  
+fcmToken: {type:String},  
 
     isVerified: {
       type: Boolean,

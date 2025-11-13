@@ -1,25 +1,35 @@
-import { Resend } from 'resend';
-import dotenv from 'dotenv';
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: false, // true for port 465, false for others
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 export const sendEmail = async (to, subject, htmlContent) => {
   try {
-    console.log('📩 Sending email via Resend...');
+    console.log("📩 Sending email via Nodemailer...");
 
-    const response = await resend.emails.send({
-      from: 'shibosarthee@resend.dev', // You can replace with your verified domain email
-      to: 'shibosarthee@gmail.com',
-      subject,
-      html: htmlContent,
-    });
+    const mailOptions = {
+      from: `"Shibosarthee" <${process.env.SMTP_USER}>`, // sender info
+      to, // recipient email
+      subject, // subject line
+      html: htmlContent, // email HTML body
+    };
 
-    console.log('✅ Email sent successfully:', response);
-    return response;
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log("✅ Email sent successfully:", info.messageId);
+    return info;
   } catch (error) {
-    console.error('❌ Failed to send email via Resend:', error);
+    console.error("❌ Failed to send email via Nodemailer:", error);
     throw error;
   }
 };

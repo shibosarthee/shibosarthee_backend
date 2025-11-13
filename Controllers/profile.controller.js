@@ -274,14 +274,20 @@ export const uploadProfileImage = async (req, res) => {
     // Upload to Cloudinary
     const result = await uploadImageToCloudinary(req.file.buffer);
 
-    // Save to profile in DB
+    // Create profile if not exists + update image
     const profile = await Profile.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id },
-      { profileImage: { url: result.secure_url, publicId: result.public_id } },
-      { new: true }
+      { user: req.user._id },
+      {
+        $set: {
+          profileImage: {
+            url: result.secure_url,
+            publicId: result.public_id,
+          },
+          user: req.user._id, // ensure user is attached if new
+        },
+      },
+      { new: true, upsert: true } // <-- IMPORTANT!
     );
-
-    if (!profile) return res.status(404).json({ message: "Profile not found" });
 
     res.json({
       message: "Profile image uploaded & saved successfully",
@@ -291,6 +297,7 @@ export const uploadProfileImage = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Upload and save multiple gallery photos
 export const uploadGalleryPhotos = async (req, res) => {

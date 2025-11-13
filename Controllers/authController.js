@@ -34,7 +34,7 @@ export const sendOtp = async (req, res) => {
 
 
 export const verifyOtp = async (req, res) => {
-  const { email, otp } = req.body;
+  const { email, otp ,fcmToken} = req.body;
 
   const user = await User.findOne({ email });
   if (!user) return res.status(400).json({ message: 'User not found' });

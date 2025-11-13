@@ -33,7 +33,7 @@ router.put("/:id", protect, updateProfile); // update
 router.delete("/:id", protect, deleteProfile); // delete
 
 // Image upload
-router.post("/:id/profile-image", protect, uploadSingle, uploadProfileImage);
+router.post("/profile-image", protect, uploadSingle, uploadProfileImage);
 router.post(
   "/:id/gallery-photos",
   protect,
